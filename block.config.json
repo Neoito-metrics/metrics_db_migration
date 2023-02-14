@@ -1,0 +1,13 @@
+{
+  "name": "metrics_db_migration",
+  "type": "shared-fn",
+  "source": {
+    "https": "https://github.com/Neoito-metrics/metrics_db_migration",
+    "ssh": "git@github.com:Neoito-metrics/metrics_db_migration.git"
+  },
+  "language": "nodejs",
+  "start": "node index.js",
+  "build": "",
+  "postPull": "npm i",
+  "standAloneBlock": false
+}
