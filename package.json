@@ -14,7 +14,7 @@
     "migrate:migrate-next": "node index.js migrate-next",
     "migrate:reset": "node index.js reset",
     "migrate:seed": "node index.js seed",
-    "migrate:create" :"node index.js create"
+    "migrate:create": "node index.js create"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/Neoito-metrics/metrics_db_migration#readme",
   "dependencies": {
+    "aws-sdk": "^2.1319.0",
     "dotenv": "^16.0.3",
     "pg": "^8.9.0",
     "pg-hstore": "^2.3.4",
