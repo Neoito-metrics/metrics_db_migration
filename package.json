@@ -1,0 +1,41 @@
+{
+  "name": "metrics_db_migration",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "migrate": "node index.js",
+    "migrate:up": "node index.js up",
+    "migrate:down": "node index.js down",
+    "migrate:pending": "node index.js pending",
+    "migrate:executed": "node index.js executed",
+    "migrate:step": "node index.js step",
+    "migrate:migrate": "node index.js migrate",
+    "migrate:migrate-next": "node index.js migrate-next",
+    "migrate:reset": "node index.js reset",
+    "migrate:seed": "node index.js seed",
+    "migrate:create" :"node index.js create"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Neoito-metrics/metrics_db_migration.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Neoito-metrics/metrics_db_migration/issues"
+  },
+  "homepage": "https://github.com/Neoito-metrics/metrics_db_migration#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "pg": "^8.9.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.28.0",
+    "umzug": "^3.2.1"
+  },
+  "devDependencies": {
+    "babel-register": "^6.26.0",
+    "sequelize-cli": "^6.6.0"
+  },
+  "type": "module"
+}
