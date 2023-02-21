@@ -1,6 +1,4 @@
-// migrations/00_template.js
-
-const { Sequelize } = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 
 async function up({ context: queryInterface }) {
     /*

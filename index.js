@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 import AWS from "aws-sdk";
-import fs from "fs";
+import { readFileSync } from "fs";
 import { Umzug, SequelizeStorage } from "umzug";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -55,17 +55,7 @@ async function runMigrations() {
           console.log("Invalid argument: the migration name is missing.");
           return;
         }
-        const migrationTemplate = `
-
-            module.exports = {
-              up: async (queryInterface, Sequelize) => {
-                // migration logic goes here
-              },
-              down: async (queryInterface, Sequelize) => {
-                // undo migration logic goes here
-              }
-            };
-          `;
+        const migrationTemplate = readFileSync('./templates/migration.template.js', { encoding: 'utf8' });
         const timestamp = new Date().toISOString().replace(/[^0-9]/g, "");
         const migrationFilename = `${timestamp}-${migrationName}.cjs`;
         fs.writeFileSync(
