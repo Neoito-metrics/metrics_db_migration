@@ -39,6 +39,13 @@ async function runMigrations() {
       logger: console,
     });
 
+    const seeder = new Umzug({
+      storage: new SequelizeStorage({ sequelize, modelName: 'SequelizeData' }),
+      migrations: { glob: "seeders/*.cjs" },
+      context: sequelize.getQueryInterface(),
+      logger: console,
+    })
+
     const [, , command, migrationName] = process.argv;
 
     switch (command) {
@@ -103,6 +110,12 @@ async function runMigrations() {
         console.log(
           `All migrations down to and including ${migrationName} have been reverted.`
         );
+        break;
+      case "seed-up":
+        await seeder.up();
+        break;
+      case "seed-down":
+        await seeder.down();
         break;
       default:
         console.log(`Invalid command: ${command}`);
