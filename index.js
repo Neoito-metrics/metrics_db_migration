@@ -9,10 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const AWS_REGION = process.env.AWS_REGION || "ap-south-1";
 const SECRET_ARN = process.env.SECRET_ARN || "metricsapp/secrets";
-// const host = "localhost";
-// const DB_NAME = "hello_dev";
-// const DB_USER = "postgres";
-// const DB_PASS = "postgres";
+
 const secretsManager = new AWS.SecretsManager({
   region: AWS_REGION,
 });
