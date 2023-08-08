@@ -2,7 +2,7 @@
   "name": "metrics_db_migration",
   "type": "shared-fn",
   "source": {
-    "https": "https://github.com/Neoito-metrics/metrics_db_migration",
+    "https": "https://github.com/Neoito-metrics/metrics_db_migration.git",
     "ssh": "git@github.com:Neoito-metrics/metrics_db_migration.git"
   },
   "language": "nodejs",

@@ -1,18 +1,15 @@
 import { Sequelize } from "sequelize";
 import AWS from "aws-sdk";
-import fs from "fs";
+import { readFileSync } from "fs";
 import { Umzug, SequelizeStorage } from "umzug";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
-
+import fs from "fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const AWS_REGION = process.env.AWS_REGION || "ap-south-1";
 const SECRET_ARN = process.env.SECRET_ARN || "metricsapp/secrets";
-// const host = "localhost";
-// const DB_NAME = "hello_dev";
-// const DB_USER = "postgres";
-// const DB_PASS = "postgres";
+
 const secretsManager = new AWS.SecretsManager({
   region: AWS_REGION,
 });
@@ -39,6 +36,13 @@ async function runMigrations() {
       logger: console,
     });
 
+    const seeder = new Umzug({
+      storage: new SequelizeStorage({ sequelize, modelName: 'SequelizeData' }),
+      migrations: { glob: "seeders/*.cjs" },
+      context: sequelize.getQueryInterface(),
+      logger: console,
+    })
+
     const [, , command, migrationName] = process.argv;
 
     switch (command) {
@@ -55,17 +59,7 @@ async function runMigrations() {
           console.log("Invalid argument: the migration name is missing.");
           return;
         }
-        const migrationTemplate = `
-
-            module.exports = {
-              up: async (queryInterface, Sequelize) => {
-                // migration logic goes here
-              },
-              down: async (queryInterface, Sequelize) => {
-                // undo migration logic goes here
-              }
-            };
-          `;
+        const migrationTemplate = readFileSync('./templates/migration.template.js', { encoding: 'utf8' });
         const timestamp = new Date().toISOString().replace(/[^0-9]/g, "");
         const migrationFilename = `${timestamp}-${migrationName}.cjs`;
         fs.writeFileSync(
@@ -113,6 +107,12 @@ async function runMigrations() {
         console.log(
           `All migrations down to and including ${migrationName} have been reverted.`
         );
+        break;
+      case "seed-up":
+        await seeder.up();
+        break;
+      case "seed-down":
+        await seeder.down();
         break;
       default:
         console.log(`Invalid command: ${command}`);
