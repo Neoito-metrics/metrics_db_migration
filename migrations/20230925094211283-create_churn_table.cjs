@@ -11,6 +11,11 @@ async function up({ context: queryInterface }) {
         project_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: 'projects', 
+                key: 'id',         
+            },
+            onDelete: 'CASCADE', 
         },
         sprint_id: {
             type: DataTypes.INTEGER,
