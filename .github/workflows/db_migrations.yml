@@ -31,4 +31,4 @@ jobs:
         run: npm install
 
       - name: Run Database Migration
-        run:  run: STAGE=${{ env.STAGE }} npm run migrate:up
+        run: STAGE=${{ env.STAGE }} npm run migrate:up
