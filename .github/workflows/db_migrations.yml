@@ -5,7 +5,7 @@ on:
     types: [closed]
     branches:
       - dev
-      - UAT
+      - uat
 
 env:
   STAGE: ${{ github.event.pull_request.base.ref }}
@@ -31,9 +31,4 @@ jobs:
         run: npm install
 
       - name: Run Database Migration
-        run: |
-          if [[ "$STAGE" == "dev" ]] || [[ "$STAGE" == "UAT" ]]; then
-            npm run migrate:up
-          else
-            echo "Skipping migration as the target branch is not dev or UAT."
-          fi
+        run:  run: STAGE=${{ env.STAGE }} npm run migrate:up
