@@ -17,7 +17,6 @@ const secretsManager = new AWS.SecretsManager({
 
 async function runMigrations() {
   try {
-	  console.log(SECRET_ARN);
     const secretsRequest = await secretsManager
       .getSecretValue({ SecretId: SECRET_ARN })
       .promise();
