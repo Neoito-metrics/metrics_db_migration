@@ -1,0 +1,34 @@
+name: CI/CD for Dev and UAT Branches
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - dev
+      - uat
+
+env:
+  STAGE: ${{ github.event.pull_request.base.ref }}
+  AWS_S3_BUCKET: dev-metrics.neoito.com
+  AWS_REGION: ap-south-1
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Database Migration
+        run: STAGE=${{ env.STAGE }} npm run migrate:up
