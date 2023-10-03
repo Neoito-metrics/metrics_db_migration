@@ -7,8 +7,9 @@ import { fileURLToPath } from "url";
 import fs from "fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const STAGE = process.env.STAGE || "dev"
 const AWS_REGION = process.env.AWS_REGION || "ap-south-1";
-const SECRET_ARN = process.env.SECRET_ARN || "metricsapp/secrets";
+const SECRET_ARN = process.env.SECRET_ARN || `${STAGE}/metricsapp/secrets`;
 
 const secretsManager = new AWS.SecretsManager({
   region: AWS_REGION,
@@ -16,6 +17,7 @@ const secretsManager = new AWS.SecretsManager({
 
 async function runMigrations() {
   try {
+	  console.log(SECRET_ARN);
     const secretsRequest = await secretsManager
       .getSecretValue({ SecretId: SECRET_ARN })
       .promise();
