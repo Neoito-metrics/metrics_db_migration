@@ -1,14 +1,13 @@
 name: CI/CD for Dev and UAT Branches
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - dev
       - uat
 
 env:
-  STAGE: ${{ github.event.pull_request.base.ref }}
+  STAGE: ${{ github.ref }}
   AWS_S3_BUCKET: dev-metrics.neoito.com
   AWS_REGION: ap-south-1
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
