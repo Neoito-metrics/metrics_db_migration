@@ -7,7 +7,7 @@ on:
       - uat
 
 env:
-  STAGE: ${{ github.ref }}
+  STAGE: ${{ github.ref#refs/heads/ }}
   AWS_S3_BUCKET: dev-metrics.neoito.com
   AWS_REGION: ap-south-1
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
